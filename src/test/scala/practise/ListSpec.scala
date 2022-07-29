@@ -34,4 +34,8 @@ class ListSpec extends AnyFlatSpec with Matchers {
     code ++
   }
 
+  "List case class ::" should "create a List" in {
+    val code = new UsingList()
+    code.`::op` shouldEqual "-"
+  }
 }

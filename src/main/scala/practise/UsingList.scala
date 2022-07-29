@@ -55,5 +55,9 @@ class UsingList {
     println((ls ++: pf ).mkString)
   }
 
+  // 奇怪的写法
+  def `::op` (): String = {
+     ("" :: ::("-" , Nil)).mkString
+  }
  
 }
