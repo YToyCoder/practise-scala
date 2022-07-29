@@ -12,8 +12,7 @@ object Leetcode {
   著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
   */
   def isPowerOfTwo(n: Int): Boolean = {
-    if ((n & 0x1) == 1 && n > 1 || n <= 0) false
-    else if(n == 1) true
-    else isPowerOfTwo(n >> 1)
+    if (n <= 0) false
+    else (n & (n - 1)) == 0 
   }
 }
