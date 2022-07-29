@@ -31,7 +31,9 @@ class UsingList {
   def listAdd[T](op : (List[String], String) => List[String]): Unit = {
     var list : List[String] = List()
     for(i <- 0 to 3000)
-      list = op(list, "")
+      list = op(list, s"$i")
+
+    // println(list.mkString(" "))
   }
 
   def time(run : => Unit): Long = {
