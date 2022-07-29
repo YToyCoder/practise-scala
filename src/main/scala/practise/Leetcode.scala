@@ -11,8 +11,5 @@ object Leetcode {
   链接：https://leetcode.cn/problems/power-of-two
   著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
   */
-  def isPowerOfTwo(n: Int): Boolean = {
-    if (n <= 0) false
-    else (n & (n - 1)) == 0 
-  }
+  def isPowerOfTwo(n: Int): Boolean = n > 0 && (n & (n - 1)) == 0 
 }
