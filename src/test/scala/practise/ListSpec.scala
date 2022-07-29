@@ -2,6 +2,7 @@ package practise
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import scala.language.postfixOps
 
 class ListSpec extends AnyFlatSpec with Matchers { 
 
@@ -23,9 +24,14 @@ class ListSpec extends AnyFlatSpec with Matchers {
     aLag > pLag shouldBe true
   }
 
-  "List +++" should " nothing to show" in {
+  "List :::" should " nothing to show" in {
     val code = new UsingList()
     code.prefix()
+  }
+
+  "List ++:" should " nothing to show" in {
+    val code = new UsingList()
+    code ++
   }
 
 }

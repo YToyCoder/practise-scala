@@ -48,5 +48,12 @@ class UsingList {
     val ls : List[String] = List("l", "i" , "s" ,"t")
     println((ls ::: pf ).mkString)
   }
+
+  def ++(): Unit = {
+    val pf : List[String] = List("A", "B", "C")
+    val ls : List[String] = List("l", "i" , "s" ,"t")
+    println((ls ++: pf ).mkString)
+  }
+
  
 }
