@@ -16,4 +16,12 @@ class SeqSpec extends AnyFlatSpec with Matchers{
     (UsingSeq concat) shouldEqual (for(i <- 1 to 20) yield i)
   }
 
+  "Seq diff" should " -- " in {
+    (UsingSeq diff) shouldEqual (for(i <- 10 to 20) yield i)
+  }
+
+  "Seq min" should " get min value" in {
+    UsingSeq min
+  }
+
 }
