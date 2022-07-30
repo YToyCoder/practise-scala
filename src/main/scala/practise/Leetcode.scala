@@ -12,4 +12,20 @@ object Leetcode {
   著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
   */
   def isPowerOfTwo(n: Int): Boolean = n > 0 && (n & (n - 1)) == 0 
+
+
+  def getWinner(arr: Array[Int], k: Int): Int ={
+
+    def find(arr: Array[Int], k : Int, count : Int, max : Int, next : Int) : Int = {
+      if(next >= arr.length) max
+      else if(count == k) max
+      else {
+        val keep = arr(next) < max
+        find(arr, k, if(keep) count + 1 else 1, if(keep) max else arr(next), next + 1)
+      }
+    }
+
+    find(arr, k, 1, Math.max(arr(0), arr(1)), 2)
+  } 
+
 }
