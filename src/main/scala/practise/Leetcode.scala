@@ -64,4 +64,38 @@ object Leetcode {
     else List(tomatoSlices / 2 - cheeseSlices, cheeseSlices * 2 - tomatoSlices / 2)
   }
 
+
+  /*
+
+  如果字符串 s 中 不存在 两个不同字符 频次 相同的情况，就称 s 是 优质字符串 。
+
+  给你一个字符串 s，返回使 s 成为 优质字符串 需要删除的 最小 字符数。
+
+  字符串中字符的 频次 是该字符在字符串中的出现次数。例如，在字符串 "aab" 中，'a' 的频次是 2，而 'b' 的频次是 1 。
+
+  来源：力扣（LeetCode）
+  链接：https://leetcode.cn/problems/minimum-deletions-to-make-character-frequencies-unique
+  著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+  */
+  def minDeletions(s: String): Int = {
+    import scala.collection.mutable
+    val chars : Array[Char] = s.toCharArray()
+    val counts : Array[Int] = new Array[Int](26)
+    for(c <- chars;
+        index : Int = c - 'a'
+    ) 
+      counts(index) += 1
+    val fill : mutable.Set[Int] = mutable.Set()
+    var ans = 0
+    for(count <- counts){
+      var n : Int = count
+      while(fill.contains(n)){
+        n -= 1
+        ans += 1
+      }
+      if(n != 0) fill.add(n)
+    }
+    ans
+  }
+
 }
