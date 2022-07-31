@@ -1,5 +1,7 @@
 package  practise
 
+import scala.collection.mutable
+
 object Leetcode {
   
   /*
@@ -96,6 +98,27 @@ object Leetcode {
       if(n != 0) fill.add(n)
     }
     ans
+  }
+
+  /*
+
+  给定一个字符串 s ，你需要反转字符串中每个单词的字符顺序，同时仍保留空格和单词的初始顺序。
+
+  */
+  def reverseWords(s: String): String = {
+    val resultBuilder = mutable.StringBuilder.newBuilder
+    val chars : Array[Char] = s.toCharArray();
+    var start : Int = 0
+    for(i <- 0 until chars.length){
+      if(i == chars.length - 1 || chars(i + 1) == ' '){
+        for(j <- (i to start by -1)){
+          resultBuilder.append(chars(j))
+        }
+        // end reset start
+        start = i + 2
+      }else if(chars(i) == ' ')resultBuilder.append(chars(i))
+    }
+    resultBuilder.toString()
   }
 
 }
