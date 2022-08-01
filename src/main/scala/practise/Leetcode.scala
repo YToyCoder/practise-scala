@@ -138,4 +138,40 @@ object Leetcode {
   }
 
 
+  def construct(grid: Array[Array[Int]]): Node = {
+
+    def build(grid: Array[Array[Int]], row : Int, col : Int, size : Int) : Node = {
+      if(size == 1) new Node(grid(row)(col) == 1, true)
+      else {
+        val subsize : Int = size / 2
+        val topLeft: Node = build(grid, row, col, subsize)
+        val topRight: Node = build(grid, row, col + subsize, subsize)
+        val bottomLeft: Node = build(grid, row + subsize, col, subsize)
+        val bottomRight: Node = build(grid, row + subsize, col + subsize, subsize)
+        if(topLeft.isLeaf && topRight.isLeaf && bottomRight.isLeaf && bottomLeft.isLeaf &&
+           topLeft.value == topRight.value && topLeft.value == bottomRight.value && topLeft.value == bottomLeft.value
+        ) 
+          new Node(topLeft.value, true)
+        else {
+          val newNode : Node = new Node(topLeft.value, false)
+          newNode.topLeft = topLeft
+          newNode.topRight = topRight
+          newNode.bottomLeft = bottomLeft
+          newNode.bottomRight = bottomRight
+          newNode
+        }
+      }
+    }
+    build(grid, 0, 0, grid.length)
+  }
+
+  class Node(var _value: Boolean, var _isLeaf: Boolean) {
+    var value: Int = _value
+    var isLeaf: Boolean = _isLeaf
+    var topLeft: Node = null
+    var topRight: Node = null
+    var bottomLeft: Node = null
+    var bottomRight: Node = null
+  }
+
 }
