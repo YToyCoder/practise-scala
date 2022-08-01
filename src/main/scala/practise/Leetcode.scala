@@ -138,7 +138,17 @@ object Leetcode {
   }
 
 
+  // 构建四叉树
   def construct(grid: Array[Array[Int]]): Node = {
+
+    class Node(var _value: Boolean, var _isLeaf: Boolean) {
+      var value: Int = _value
+      var isLeaf: Boolean = _isLeaf
+      var topLeft: Node = null
+      var topRight: Node = null
+      var bottomLeft: Node = null
+      var bottomRight: Node = null
+    }
 
     def build(grid: Array[Array[Int]], row : Int, col : Int, size : Int) : Node = {
       if(size == 1) new Node(grid(row)(col) == 1, true)
@@ -165,13 +175,5 @@ object Leetcode {
     build(grid, 0, 0, grid.length)
   }
 
-  class Node(var _value: Boolean, var _isLeaf: Boolean) {
-    var value: Int = _value
-    var isLeaf: Boolean = _isLeaf
-    var topLeft: Node = null
-    var topRight: Node = null
-    var bottomLeft: Node = null
-    var bottomRight: Node = null
-  }
 
 }
