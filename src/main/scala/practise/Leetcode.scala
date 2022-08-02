@@ -286,4 +286,24 @@ object Leetcode {
     }).reduce((a, b) => a + b)
     sum + odd
   }
+
+  class TreeNode(_value: Int = 0, _left: TreeNode = null, _right: TreeNode = null) {
+    var value: Int = _value
+    var left: TreeNode = _left
+    var right: TreeNode = _right
+  }
+
+  // 给你一棵二叉树的根节点 root ，翻转这棵二叉树，并返回其根节点。
+  def invertTree(root: TreeNode): TreeNode = {
+    def doInvert(r : TreeNode) : Unit = {
+      if(r != null){
+        val left : TreeNode = r.left
+        r.left = r.right
+        r.right = left
+        doInvert(r.left)
+        doInvert(r.right)
+      } 
+    }
+    root
+  }
 }
