@@ -266,12 +266,11 @@ object Leetcode {
   def longestPalindrome(s: String): Int = {
     import scala.collection.mutable.HashMap
 
-    val chars : Array[Char] = s.toCharArray()
     val counts : HashMap[Char, IntHolder] = HashMap()
-    for(el <- chars){
+    s.foreach(el => {
       val holder : IntHolder = counts.getOrElseUpdate(el, new IntHolder(0))
       holder.value += 1
-    }
+    })
     var odd : Int = 0
     val sum = (for(count <- counts.values)
     yield {
