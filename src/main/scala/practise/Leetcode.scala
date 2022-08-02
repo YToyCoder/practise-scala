@@ -1,7 +1,6 @@
 package  practise
 
 import scala.collection.mutable
-import scala.collection.IterableFactory.apply
 
 object Leetcode {
   
@@ -138,18 +137,18 @@ object Leetcode {
     else repeat('q',n)  
   }
 
+  class Node(var _value: Boolean, var _isLeaf: Boolean) {
+    var value: Boolean = _value
+    var isLeaf: Boolean = _isLeaf
+    var topLeft: Node = null
+    var topRight: Node = null
+    var bottomLeft: Node = null
+    var bottomRight: Node = null
+  }
 
   // 构建四叉树
   def construct(grid: Array[Array[Int]]): Node = {
 
-    class Node(var _value: Boolean, var _isLeaf: Boolean) {
-      var value: Int = _value
-      var isLeaf: Boolean = _isLeaf
-      var topLeft: Node = null
-      var topRight: Node = null
-      var bottomLeft: Node = null
-      var bottomRight: Node = null
-    }
 
     def build(grid: Array[Array[Int]], row : Int, col : Int, size : Int) : Node = {
       if(size == 1) new Node(grid(row)(col) == 1, true)
@@ -213,6 +212,29 @@ object Leetcode {
     val ans = mutable.ListBuffer[String]()
     dfs("", n, n, ans)
     ans.toList
+  }
+
+  
+  def intersection(nums1: Array[Int], nums2: Array[Int]): Array[Int] = {
+    var cache : Set[Int] = Set.empty
+    var ans : Set[Int] = Set.empty
+    util.Sorting.quickSort(nums1)
+    util.Sorting.quickSort(nums2)
+    var preCache : Int = -1
+    for(i <- 0 until nums1.length if preCache != nums1(i)
+    ) {
+      preCache = nums1(i)
+      cache = cache + nums1(i)
+    }
+    preCache = -1
+    for(i <- 0 until nums2.length if preCache != nums2(i)
+    ){
+      preCache = nums2(i)
+      val old = cache
+      cache = cache + nums2(i)
+      if(old == cache) ans = ans + nums2(i)
+    }
+    ans.toArray
   }
 
 }
