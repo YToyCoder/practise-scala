@@ -260,4 +260,24 @@ object Leetcode {
     else if(n <= 0 || ((n & 0x3) > 0)) false
     else isPowerOfFour(n >> 2)
   }
+
+  case class IntHolder(var value : Int);
+
+  def longestPalindrome(s: String): Int = {
+    import scala.collection.mutable.HashMap
+
+    val chars : Array[Char] = s.toCharArray()
+    val counts : HashMap[Char, IntHolder] = HashMap()
+    for(el <- chars){
+      val holder : IntHolder = counts.getOrElseUpdate(el, new IntHolder(0))
+      holder.value += 1
+    }
+    var odd : Int = 0
+    val sum = (for(count <- counts.values)
+    yield {
+      if (count.value % 2 == 1) odd = 1
+      (count.value - count.value % 2)
+    }).reduce((a, b) => a + b)
+    sum + odd
+  }
 }
