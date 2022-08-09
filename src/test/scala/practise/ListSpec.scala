@@ -38,4 +38,9 @@ class ListSpec extends AnyFlatSpec with Matchers {
     val code = new UsingList()
     code.`::op` shouldEqual "-"
   }
+
+  "List collect fun" should "create a List" in {
+    val code = new UsingList()
+    code.the_collection()
+  }
 }

@@ -59,5 +59,11 @@ class UsingList {
   def `::op` (): String = {
      ("" :: ::("-" , Nil)).mkString
   }
+
+  def the_collection() : Unit = {
+    (1 to 5).toList.collect((el: Int) => el match {
+      case v => s"$v?"
+    }).foreach(println _)
+  }
  
 }
