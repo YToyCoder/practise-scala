@@ -9,3 +9,10 @@ trait TraitType {
   this : SelfType => 
 }
 ```
+
+### 2 advent of code
+
+[the advent of code](https://adventofcode.com/)
+
+**2022-day1**
+
