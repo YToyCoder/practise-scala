@@ -31,12 +31,12 @@ class ListSpec extends AnyFlatSpec with Matchers {
 
   "List ++:" should " nothing to show" in {
     val code = new UsingList()
-    code ++
+    code.++()
   }
 
   "List case class ::" should "create a List" in {
     val code = new UsingList()
-    code.`::op` shouldEqual "-"
+    code.`::op`() shouldEqual "-"
   }
 
   "List collect fun" should "create a List" in {

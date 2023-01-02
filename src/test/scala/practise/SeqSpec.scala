@@ -6,7 +6,7 @@ import scala.language.postfixOps
 
 class SeqSpec extends AnyFlatSpec with Matchers{
   "Seq" should "create a new Seq" in {
-    val seq : Seq[String] = (UsingSeq createSeq)
+    val seq : Seq[String] = (UsingSeq.createSeq())
     seq.length shouldEqual 3
     seq.mkString shouldEqual "123"
     seq(0) shouldEqual "1"
