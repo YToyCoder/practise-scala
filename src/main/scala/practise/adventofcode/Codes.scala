@@ -37,15 +37,11 @@ object Codes {
     val res = str.split('\r')
     .map(el => el.length() match{
       case 3 => el
-      case _ => el.substring(1)
-    }
-    )
+      case _ => el.substring(1) // rm \r
+    })
     .map(el => {
-      // if(el.length() == 4)
-      val o = el(0)
-      val s = el(2)
-      val oo = rock.find(s)
-      oo.comp(rock.find(o)) + oo.v
+      val oo = rock.find(el(2))
+      oo.comp(rock.find(el(0))) + oo.v
     })
     .sum
     println(res)
