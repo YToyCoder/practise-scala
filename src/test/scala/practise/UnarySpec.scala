@@ -11,7 +11,7 @@ class UnarySpec extends AnyFlatSpec with Matchers {
 
 
   "unary" should ("self define unary") in {
-    print(new Unary("init").unary_-())
+    print(- new Unary("init"))
   }
 
 }
