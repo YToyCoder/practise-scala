@@ -21,7 +21,29 @@ case class CompareLoop(
 }
 
 object Codes {
+  def contentFromResource(name : String) : String = Source.fromResource(name).mkString
   @main
+  def the_2022_day3() : Unit = {
+    println(s"${'A'.toInt} ${'a'.toInt}")
+    val content = contentFromResource("day3.txt")
+    val level = (c : Char) => 
+      if(c >= 'a') c - 'a' + 1
+      else c - 'A' + 27
+    
+    val lines = 
+      content.split("\r")
+      .map(el => if(el(0) == '\n') el.substring(1) else el)
+      .map(el => {
+        val (one, two) = el.splitAt(el.length()/2)
+        one.filter(c => two.contains(c))
+        .distinct
+        .map(level)
+        .reduce(_ + _)
+      })
+      .reduce(_ + _)
+    println(lines)
+  }
+
   def the_2022_day2() = {
     val input = Source.fromResource("day2.txt")
     val str : String = input.mkString
