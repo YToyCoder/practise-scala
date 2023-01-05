@@ -22,7 +22,23 @@ case class CompareLoop(
 
 object Codes {
   def contentFromResource(name : String) : String = Source.fromResource(name).mkString
+
   @main
+  def the_2022_day4() : Unit = {
+    val content = contentFromResource("day4.txt")
+    val include = (a:Array[Int], b : Array[Int]) => a(0) <= b(0) && a(1) >= b(1)
+    val pairs = content.split("\r")
+    .map(el => if(el(0) == '\n') el.substring(1) else el)
+    .map(el => {
+      val tasks = el.split(',').map(i => i.split('-').map(_.toInt))
+      val one = tasks(0)
+      val two = tasks(1)
+      include(one, two) | include(two, one)
+    })
+    .count(_ == true)
+    println(pairs)
+  }
+
   def the_2022_day3() : Unit = {
     println(s"${'A'.toInt} ${'a'.toInt}")
     val content = contentFromResource("day3.txt")
