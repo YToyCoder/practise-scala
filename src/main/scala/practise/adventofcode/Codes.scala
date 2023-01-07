@@ -23,7 +23,47 @@ case class CompareLoop(
 object Codes {
   def contentFromResource(name : String) : String = Source.fromResource(name).mkString
 
+  def run_with(name: String,code : (content: String) => Unit ) = {
+    val source = Source.fromResource(name)
+    code(source.mkString)
+    source.close()
+  }
+
   @main
+  def the_2022_day5() = {
+    run_with("day5.txt",content => {
+      val spl = content.split("\n\r")
+      def if_first_then_rm(c: Char, s:String):String = if(s(0) == c) s.substring(1) else s 
+      val a = spl(0).split("\r").map(i => if(i(0) == '\n') i.substring(1) else i)
+      val count = (a(a.length -1).length() + 1)/4
+      val stk = a.reverse.tail
+      var ls  = stk
+      .map(el => el.zipWithIndex.filter((_,ind)=> (ind - 1)%4 == 0))
+      .flatMap(el => el)
+      .groupBy(_._2)
+      .toList
+      .sortBy(_._1)
+      .map(_._2.map(_._1).filter(_ != ' ').reverse.toList)
+      .toList
+      println(ls)
+      val mvs : Array[Array[Int]] = spl(1).substring(1)
+      .split('\r')
+      .map(if_first_then_rm('\n', _))
+      .map(i => i.split(' ').filter(_.forall(_.isDigit)).map(_.toInt))
+
+      for(i <- mvs;
+        mv <- 0 until i(0);
+        fromi = i(1) - 1;
+        toi = i(2) - 1
+        ){
+        val from = ls(fromi)
+        ls = ls.updated(fromi, from.tail)
+        ls = ls.updated(toi, from(0) :: ls(toi))
+      }
+      println(ls.map(el => if(el == Nil) "" else el(0)).mkString)
+    })
+  }
+
   def the_2022_day4() : Unit = {
     val content = contentFromResource("day4.txt")
     val include = (a:Array[Int], b : Array[Int]) => a(0) <= b(0) && a(1) >= b(1)
