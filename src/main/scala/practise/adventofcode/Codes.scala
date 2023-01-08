@@ -20,6 +20,40 @@ case class CompareLoop(
   }
 }
 
+import scala.collection.mutable
+
+object LsAndMap{
+  def max_ls_size() : Int = 4
+}
+case class LsAndMap[E](
+  var len : Int = 0,
+  val counter : mutable.Map[E,Int] = mutable.Map[E,Int](), 
+  val ls : mutable.ListBuffer[E] = mutable.ListBuffer[E]()
+){
+  def +(elem : E):Option[E] = {
+    add(elem)
+    if(len <= LsAndMap.max_ls_size()){
+      Option.empty
+    }else Option(remove(elem))
+  }
+
+  private[this] def add(elem : E) = {
+    ls.addOne(elem)
+    counter.addOne((elem, counter.getOrElse(elem, 0) + 1)) 
+    len += 1
+  }
+
+  private[this] def remove(elem : E): E = {
+    // val ret = ls.reverse.last
+    val ret = ls.remove(0)
+    counter.updateWith(ret) {count => Option(( count.getOrElse(1) - 1)) }
+    len -= 1
+    ret
+  }
+
+  def all_unique : Boolean = len == LsAndMap.max_ls_size() && counter.forall((_, count) => count <= 1)
+}
+
 object Codes {
   def contentFromResource(name : String) : String = Source.fromResource(name).mkString
 
@@ -30,6 +64,27 @@ object Codes {
   }
 
   @main
+  def the_2022_day6() = {
+    
+    def test_for(c_str : String): Int = {
+      val counter: LsAndMap[Char] = LsAndMap()
+      def fist_marker(loc: Int): Int = {
+        if(counter.all_unique) loc
+        else if(loc >= c_str.length()) -1
+        else {
+          counter.+(c_str(loc))
+          fist_marker(loc + 1)
+        } 
+      }
+      fist_marker(0)
+    }
+    println(test_for("mjqjpqmgbljsphdztnvjfqwrcgsmlb"))
+    println(test_for("bvwbjplbgvbhsrlpgdmjqwftvncz"))
+    println(test_for("nppdvjthqldpwncqszvftbrmjlhg"))
+    println(test_for("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg"))
+    run_with("day6.txt",c => println(test_for(c)))
+  }
+
   def the_2022_day5() = {
     run_with("day5.txt",content => {
       val spl = content.split("\n\r")
