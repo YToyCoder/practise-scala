@@ -1,6 +1,7 @@
 package practise.adventofcode
 
 import scala.io.Source
+import scala.collection.mutable.ListBuffer
 
 case class CompareLoop(
   val v: Int,
@@ -54,6 +55,22 @@ case class LsAndMap[E](
   def all_unique : Boolean = len == LsAndMap.max_ls_size() && counter.forall((_, count) => count <= 1)
 }
 
+abstract class FSEl {
+  def name: String
+  def isfile: Boolean = false
+  def isdir: Boolean = false
+  def subs: mutable.ListBuffer[FSEl]
+}
+case class FSFile(val name: String, val size: Int) extends FSEl {
+  def subs: mutable.ListBuffer[FSEl] = mutable.ListBuffer.empty
+  override def isfile = true
+}
+
+case class FSDir(val name: String, val up: FSDir, val subs : mutable.ListBuffer[FSEl] = ListBuffer()) extends FSEl {
+  def add(el : FSEl) = subs.addOne(el)
+  def find(sub: String) : FSDir = subs.find(_.name == sub).get.asInstanceOf[FSDir]
+}
+
 object Codes {
   def contentFromResource(name : String) : String = Source.fromResource(name).mkString
 
@@ -63,7 +80,54 @@ object Codes {
     source.close()
   }
 
+  def split_to_lines(name: String): Iterator[String] = Source.fromResource(name).getLines()
+
   @main
+  def the_2022_day7() = {
+    val lines = split_to_lines("day7.txt")
+    val is_cmd = (s : String) => s(0) == '$'
+    val root : FSDir = FSDir("/", null)
+    var cur : FSDir = null
+    for(line <- lines){
+      val els = line.split(' ')
+      if(is_cmd(line)){
+        els(1) match {
+          case "cd" => els(2) match {
+              case "/" => cur = root
+              case ".." => cur = cur.up
+              case _ => cur = cur.find(els(2))
+            }
+          case "ls" => {/** do nothing */}
+        }
+      }else{
+        cur.add(
+          if(els(0) == "dir"){
+            FSDir(els(1), cur)
+          }else {
+            FSFile(els(1), els(0).toInt)
+          }
+        )
+      }
+    }
+    var ret : Int = 0
+    def get_total(path : FSDir): Int = {
+      val all_in = (for sub <- path.subs
+        v = sub match {
+          case a:FSDir => { get_total(a) }
+          case b:FSFile => { b.size }
+          case _ => 0
+        }
+      yield v)
+      .reduce(_ + _)
+      if(all_in <= 100000)
+        ret += all_in
+      all_in
+    }
+    println(lines.mkString)
+    println(get_total(root))
+    println(s"res: ${ret}")
+  }
+
   def the_2022_day6() = {
     
     def test_for(c_str : String): Int = {
