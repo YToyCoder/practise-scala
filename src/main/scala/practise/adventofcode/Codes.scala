@@ -117,7 +117,7 @@ object Codes {
           case _ => 0
         }
       yield v)
-      .reduce(_ + _)
+      .sum
       if(all_in <= 100000)
         ret += all_in
       all_in
@@ -212,9 +212,9 @@ object Codes {
         one.filter(c => two.contains(c))
         .distinct
         .map(level)
-        .reduce(_ + _)
+        .sum
       })
-      .reduce(_ + _)
+      .sum
     println(lines)
   }
 
@@ -252,7 +252,8 @@ object Codes {
         case  _  => rock.find(el(0)).next.v + 6
       }
     })
-    .reduce(_ + _)
+    .sum
+
     println(s"part one ${part_one}")
     println(s"part two ${part_two}")
   }
