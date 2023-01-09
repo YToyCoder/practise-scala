@@ -218,6 +218,7 @@ object Codes {
     println(lines)
   }
 
+  @main
   def the_2022_day2() = {
     val input = Source.fromResource("day2.txt")
     val str : String = input.mkString
@@ -230,20 +231,32 @@ object Codes {
     rock.pre =  seizer
     rock.next = paper
     paper.next = seizer
-    val res = str.split('\r')
+    val lines = str.split('\r')
     .map(el => el.length() match{
       case 3 => el
       case _ => el.substring(1) // rm \r
     })
+
+    val part_one = lines
     .map(el => {
       val oo = rock.find(el(2))
       oo.comp(rock.find(el(0))) + oo.v
     })
     .sum
-    println(res)
+
+    val part_two = lines
+    .map(el => {
+      el(2) match {
+        case 'X' => rock.find(el(0)).pre.v
+        case 'Y' => rock.find(el(0)).v + 3
+        case  _  => rock.find(el(0)).next.v + 6
+      }
+    })
+    .reduce(_ + _)
+    println(s"part one ${part_one}")
+    println(s"part two ${part_two}")
   }
 
-  @main
   def the_2022_day1() = {
     val input = Source.fromFile("input.txt")
     val fileStr = input.mkString
