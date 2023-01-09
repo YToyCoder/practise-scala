@@ -110,13 +110,14 @@ object Codes {
     }
     var ret : Int = 0
     def get_total(path : FSDir): Int = {
-      val all_in = (for sub <- path.subs
-        v = sub match {
-          case a:FSDir => { get_total(a) }
-          case b:FSFile => { b.size }
-          case _ => 0
-        }
-      yield v)
+      val all_in = (
+        for sub <- path.subs
+            v = sub match {
+              case a:FSDir => get_total(a) 
+              case b:FSFile => b.size
+              case _ => 0
+            }
+        yield v)
       .sum
       if(all_in <= 100000)
         ret += all_in
