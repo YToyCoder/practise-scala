@@ -82,7 +82,6 @@ object Codes {
 
   def split_to_lines(name: String): Iterator[String] = Source.fromResource(name).getLines()
 
-  @main
   def the_2022_day7() = {
     val lines = split_to_lines("day7.txt")
     val is_cmd = (s : String) => s(0) == '$'
@@ -244,13 +243,15 @@ object Codes {
     println(res)
   }
 
+  @main
   def the_2022_day1() = {
     val input = Source.fromFile("input.txt")
     val fileStr = input.mkString
-    val max = fileStr.split("\n\r")
+    val each_count = fileStr.split("\n\r")
     .map(_.split("\r").map(_.tail.toInt).reduce((a,b)=> a + b))
-    .max
-    println(s"the max value ${max}")
+    println(s"the max value ${each_count.max}")
+    val c = each_count.sortInPlace().reverse.splitAt(3)(0).reduce( _ + _ )
+    println(c)
     input.close()
   }
 }
