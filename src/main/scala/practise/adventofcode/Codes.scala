@@ -194,7 +194,6 @@ object Codes {
     println(pairs)
   }
 
-  @main
   def the_2022_day3() : Unit = {
     println(s"${'A'.toInt} ${'a'.toInt}")
     val content = contentFromResource("day3.txt")
