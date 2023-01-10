@@ -84,7 +84,6 @@ case object Nls extends Als[Nothing] {
   override def tail: Nothing = ???
 }
 
-@main
 def run(args: String*) = {
   val a : Int => Char = _.toChar
   val k = "A-" +: "B-" +: Nls

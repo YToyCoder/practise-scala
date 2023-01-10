@@ -182,10 +182,8 @@ object Codes {
   }
 
   def the_2022_day4() : Unit = {
-    val content = contentFromResource("day4.txt")
     val include = (a:Array[Int], b : Array[Int]) => a(0) <= b(0) && a(1) >= b(1)
-    val pairs = content.split("\r")
-    .map(el => if(el(0) == '\n') el.substring(1) else el)
+    val pairs = split_to_lines("day4.txt")
     .map(el => {
       val tasks = el.split(',').map(i => i.split('-').map(_.toInt))
       val one = tasks(0)
@@ -196,6 +194,7 @@ object Codes {
     println(pairs)
   }
 
+  @main
   def the_2022_day3() : Unit = {
     println(s"${'A'.toInt} ${'a'.toInt}")
     val content = contentFromResource("day3.txt")
@@ -203,9 +202,10 @@ object Codes {
       if(c >= 'a') c - 'a' + 1
       else c - 'A' + 27
     
-    val lines = 
-      content.split("\r")
-      .map(el => if(el(0) == '\n') el.substring(1) else el)
+    val lines = split_to_lines("day3.txt")
+    val part_one = ""
+    /* 
+      lines
       .map(el => {
         val (one, two) = el.splitAt(el.length()/2)
         one.filter(c => two.contains(c))
@@ -214,7 +214,25 @@ object Codes {
         .sum
       })
       .sum
-    println(lines)
+    */
+
+    def find_common(t: Seq[String]) = 
+      val flat = 
+      for i <- t.map(_.distinct) 
+          el <- i
+      yield el
+      flat
+      .groupBy(_.toInt)
+      .filter((_,ls) => ls.size == 3)
+      .map(_._1.toChar)
+
+    val part_two = lines.grouped(3)
+      .map(find_common)
+      .flatMap(_.toSeq)
+      .map(level)
+      .sum
+    println(part_one)
+    println(part_two)
   }
 
   def the_2022_day2() = {
