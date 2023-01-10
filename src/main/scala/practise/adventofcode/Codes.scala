@@ -111,7 +111,7 @@ object Codes {
     var ret : Int = 0
     def get_total(path : FSDir): Int = {
       val all_in = (
-        for sub <- path.subs
+        for sub <- path.subs 
             v = sub match {
               case a:FSDir => get_total(a) 
               case b:FSFile => b.size
@@ -133,12 +133,11 @@ object Codes {
     def test_for(c_str : String): Int = {
       val counter: LsAndMap[Char] = LsAndMap()
       def fist_marker(loc: Int): Int = {
-        if(counter.all_unique) loc
-        else if(loc >= c_str.length()) -1
-        else {
-          counter.+(c_str(loc))
+        if counter.all_unique then loc
+        else if loc >= c_str.length() then -1
+        else
+          counter + c_str(loc)
           fist_marker(loc + 1)
-        } 
       }
       fist_marker(0)
     }
@@ -170,15 +169,14 @@ object Codes {
       .map(if_first_then_rm('\n', _))
       .map(i => i.split(' ').filter(_.forall(_.isDigit)).map(_.toInt))
 
-      for(i <- mvs;
-        mv <- 0 until i(0);
-        fromi = i(1) - 1;
+      for i <- mvs
+        mv <- 0 until i(0)
+        fromi = i(1) - 1
         toi = i(2) - 1
-        ){
+      do 
         val from = ls(fromi)
         ls = ls.updated(fromi, from.tail)
         ls = ls.updated(toi, from(0) :: ls(toi))
-      }
       println(ls.map(el => if(el == Nil) "" else el(0)).mkString)
     })
   }
@@ -219,7 +217,6 @@ object Codes {
     println(lines)
   }
 
-  @main
   def the_2022_day2() = {
     val input = Source.fromResource("day2.txt")
     val str : String = input.mkString
