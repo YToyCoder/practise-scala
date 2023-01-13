@@ -16,7 +16,6 @@ end Update
 
 object Runner {
 
-  @main
   def main = 
     println("runner main")
     val u = new Update()
