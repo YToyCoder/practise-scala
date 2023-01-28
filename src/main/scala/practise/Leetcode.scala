@@ -1,6 +1,8 @@
 package  practise
 
 import scala.collection.mutable
+import scala.annotation.tailrec
+import scala.compiletime.ops.long
 
 object Leetcode {
   
@@ -273,4 +275,26 @@ object Leetcode {
     }
     root
   }
+
+  // leetcode 1813
+  def areSentencesSimilar(sentence1: String, sentence2: String): Boolean =
+    // v1
+    @tailrec
+    def comp(longer: List[String], shorter: List[String]):Boolean = 
+      if(longer == Nil || shorter == Nil) true
+      else if(longer.head != shorter.head){
+        val revL = longer.reverse
+        val revS = shorter.reverse
+        if(revS.head != revL.head) false 
+        else comp(revL.tail, revS.tail)
+      }
+      else comp(longer.tail, shorter.tail)
+    val s1 = sentence1.split(' ')
+    val s2 = sentence2.split(' ')
+    if(s1.length > s2.length) comp(s1.toList, s2.toList) else comp(s2.toList, s1.toList)
+  
+  // @main
+  // def runLC: Unit = 
+  //   val res = areSentencesSimilar("My name is Haley", "My Haley")
+  //   println(s"res ${res}")
 }

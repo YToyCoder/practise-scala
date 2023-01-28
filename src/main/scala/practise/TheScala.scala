@@ -2,11 +2,11 @@ package practise
 
 object TheScala{
 
-  @main
   def main = 
     pattern_bindings
     scala3
     type_member
+    list_op_timing_comp
 
   def pattern_bindings = 
     // https://docs.scala-lang.org/scala3/reference/changed-features/pattern-bindings.html
@@ -62,4 +62,22 @@ object TheScala{
       override def eat(food: SuitableFood): Unit = println(s"eating ${food.getClass().getName()}")
     end Cat
     (new Cat).eat(new Rice)
+
+  def list_op_timing_comp: Unit = 
+    def printt: Unit = println(System.currentTimeMillis())
+    val n = 10000
+    var o: List[Int] = Nil
+    var t: List[Int] = Nil
+    printt
+    for (i <- 0 to n){
+      o = i +: o
+    }
+    printt
+
+    printt
+    for(i <- 0 to n) {
+      t = t :+ i
+    }
+    printt
+
 }
