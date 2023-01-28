@@ -80,4 +80,10 @@ object TheScala{
     }
     printt
 
+  object Enums extends Enumeration{val
+    b, a = Value;
+  }
+
+  @main
+  def scala_enumeration = println(s"${Enums.a.id} ${Enums.a.toString()}")
 }
