@@ -181,17 +181,20 @@ object Codes {
     })
   }
 
+  @main
   def the_2022_day4() : Unit = {
     val include = (a:Array[Int], b : Array[Int]) => a(0) <= b(0) && a(1) >= b(1)
-    val pairs = split_to_lines("day4.txt")
-    .map(el => {
-      val tasks = el.split(',').map(i => i.split('-').map(_.toInt))
-      val one = tasks(0)
-      val two = tasks(1)
-      include(one, two) | include(two, one)
-    })
-    .count(_ == true)
+    val filter = (fn: (one: Array[Int], two: Array[Int]) => Boolean) => {
+      split_to_lines("day4.txt")
+      .filter(el => {
+        val tasks = el.split(',').map(_.split('-').map(_.toInt))
+        fn(tasks(0), tasks(1))
+      })
+    }
+    val pairs = filter((a,b) => include(a, b) || include(b,a)).count(_ => true)
     println(pairs)
+    val has = (a: Array[Int], b: Array[Int]) => (a(0) <= b(0) && b(0) <= a(1) ) || (a(0) <= b(1) && b(1) <= a(1))
+    println(filter((a, b) => has(a, b) || has(b, a)).size)
   }
 
   def the_2022_day3() : Unit = {

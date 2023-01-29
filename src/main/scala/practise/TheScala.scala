@@ -84,6 +84,5 @@ object TheScala{
     b, a = Value;
   }
 
-  @main
   def scala_enumeration = println(s"${Enums.a.id} ${Enums.a.toString()}")
 }
