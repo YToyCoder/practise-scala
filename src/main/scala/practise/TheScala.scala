@@ -85,4 +85,17 @@ object TheScala{
   }
 
   def scala_enumeration = println(s"${Enums.a.id} ${Enums.a.toString()}")
+
+  case class Update(var name: String) {
+    println(s">> ${name}")
+    def update(v: String) = {
+      println(s"update ${name} => ${v}")
+      name = v
+    }
+  }
+
+  @main
+  def scala_update = 
+    val one = Update("hello")
+    one() = "print"
 }
