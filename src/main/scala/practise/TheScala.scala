@@ -52,16 +52,22 @@ object TheScala{
   def type_member: Unit = 
     trait Food
     trait Animal :
-      type SuitableFood <: Food
+      type SuitableFood >: BottomFood <: Food 
       def eat(food: SuitableFood): Unit
     end Animal
-
+    class BottomFood extends Rice with Food
     class Rice extends Food
     class Cat extends Animal:
       type SuitableFood = Rice
       override def eat(food: SuitableFood): Unit = println(s"eating ${food.getClass().getName()}")
     end Cat
     (new Cat).eat(new Rice)
+
+
+    class AnimalWhichEatingNothing extends  Animal {
+      type SuitableFood = Rice
+      override def eat(food: SuitableFood): Unit = println("eat nothing")
+    }
 
   def list_op_timing_comp: Unit = 
     def printt: Unit = println(System.currentTimeMillis())
@@ -94,7 +100,6 @@ object TheScala{
     }
   }
 
-  @main
   def scala_update = 
     val one = Update("hello")
     one() = "print"
