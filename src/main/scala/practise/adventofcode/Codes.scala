@@ -181,7 +181,6 @@ object Codes {
     })
   }
 
-  @main
   def the_2022_day4() : Unit = {
     val include = (a:Array[Int], b : Array[Int]) => a(0) <= b(0) && a(1) >= b(1)
     val filter = (fn: (one: Array[Int], two: Array[Int]) => Boolean) => {
